@@ -1,0 +1,215 @@
+/* ============================================================
+   DFX — Cyber-Shogun · Cyan Glace + Galaxie
+   Implémentation statique autonome (aucune dépendance runtime)
+   ============================================================ */
+
+*{box-sizing:border-box;}
+html{
+  /* Variables pilotées par le panneau Tweaks (valeurs par défaut de la charte) */
+  --accent:#3FD2D9;
+  --glow:0.25;
+}
+body{
+  margin:0;
+  background:#050608;
+  font-family:'Montserrat',sans-serif;
+  color:#C6CBCF;
+}
+
+/* ---------- Keyframes (reprises du prototype) ---------- */
+@keyframes starRise{
+  0%{transform:translateY(0) translateX(0) scale(1);opacity:0;}
+  14%{opacity:var(--peak,.7);}
+  78%{opacity:var(--peak,.7);}
+  100%{transform:translateY(calc(-1 * var(--rise,1500px))) translateX(var(--dx,0px)) scale(.35);opacity:0;}
+}
+@keyframes eqPulse{0%,100%{transform:scaleY(var(--lo,.3));}50%{transform:scaleY(var(--hi,1));}}
+@keyframes glowPulse{0%,100%{opacity:.55;}50%{opacity:1;}}
+@keyframes sweep{0%{transform:translateX(-160%) skewX(-18deg);}100%{transform:translateX(260%) skewX(-18deg);}}
+
+/* ---------- Page / scène ---------- */
+#stage{
+  min-height:100vh;
+  padding:54px 44px 110px;
+  font-family:'Montserrat',sans-serif;
+  color:#C6CBCF;
+  background:radial-gradient(120% 80% at 50% 0%,#10121a,#07080C 58%);
+}
+
+/* ---------- Bouton export PNG dans les légendes ---------- */
+.dl{
+  margin-left:auto;
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'Chakra Petch',sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--accent,#3FD2D9);
+  background:rgba(63,210,217,0.06);
+  border:1px solid color-mix(in srgb,var(--accent,#3FD2D9) 45%,transparent);
+  border-radius:6px;padding:6px 12px;cursor:pointer;
+  transition:background .15s,transform .15s,opacity .15s;
+}
+.dl:hover{background:rgba(63,210,217,0.16);}
+.dl:active{transform:translateY(1px);}
+.dl[disabled]{opacity:0.5;cursor:progress;}
+figcaption{align-items:center;}
+
+/* ---------- Bouton « Listen Now » : survol ---------- */
+.btn-listen{transition:filter .15s;}
+.btn-listen:hover{filter:brightness(1.08);}
+
+/* ============================================================
+   <image-slot> — zone photo glisser-déposer (light DOM)
+   Adaptation autonome : persistance via localStorage,
+   pas de Shadow DOM pour que l'export PNG sérialise l'image.
+   ============================================================ */
+image-slot{
+  display:block;position:relative;overflow:hidden;
+  background:rgba(255,255,255,0.02);
+}
+image-slot .slot-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:50% 50%;display:none;
+}
+image-slot[data-filled] .slot-img{display:block;}
+image-slot[data-filled] .slot-empty{display:none;}
+image-slot .slot-empty{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;text-align:center;padding:24px;cursor:pointer;user-select:none;
+  color:rgba(198,203,207,0.6);
+  font-family:'Chakra Petch',sans-serif;
+}
+image-slot .slot-empty svg{opacity:0.55;}
+image-slot .slot-empty .cap{
+  font-size:28px;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;max-width:80%;line-height:1.4;
+}
+image-slot .slot-empty .sub{
+  font-size:20px;letter-spacing:0.18em;opacity:0.7;
+}
+image-slot .slot-empty .sub u{text-underline-offset:3px;}
+image-slot .slot-ring{
+  position:absolute;inset:0;pointer-events:none;
+  border:2px dashed color-mix(in srgb,var(--accent,#3FD2D9) 45%,transparent);
+  transition:border-color .12s,background .12s;
+}
+image-slot[data-filled] .slot-ring{display:none;}
+image-slot[data-over] .slot-ring{
+  border-color:var(--accent,#3FD2D9);
+  background:color-mix(in srgb,var(--accent,#3FD2D9) 10%,transparent);
+}
+image-slot .slot-clear{
+  position:absolute;top:18px;right:18px;z-index:4;
+  display:none;align-items:center;gap:8px;cursor:pointer;
+  font-family:'Chakra Petch',sans-serif;font-size:18px;letter-spacing:0.1em;
+  text-transform:uppercase;color:#eef1f5;
+  background:rgba(7,8,12,0.72);backdrop-filter:blur(6px);
+  border:1px solid color-mix(in srgb,var(--accent,#3FD2D9) 55%,transparent);
+  border-radius:999px;padding:10px 18px;
+}
+image-slot[data-filled]:hover .slot-clear{display:inline-flex;}
+
+/* ============================================================
+   Panneau Tweaks — « Glace & Galaxie »
+   ============================================================ */
+#tweaks{
+  position:fixed;top:22px;right:22px;z-index:1000;width:300px;
+  background:linear-gradient(180deg,rgba(16,18,26,0.96),rgba(7,8,12,0.96));
+  border:1px solid rgba(140,146,152,0.22);
+  border-radius:14px;
+  box-shadow:0 24px 70px rgba(0,0,0,0.6);
+  backdrop-filter:blur(10px);
+  font-family:'Montserrat',sans-serif;color:#C6CBCF;
+  overflow:hidden;
+}
+#tweaks .tw-head{
+  display:flex;align-items:center;gap:10px;cursor:pointer;
+  padding:16px 18px;border-bottom:1px solid rgba(140,146,152,0.16);
+}
+#tweaks .tw-head .dot{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--accent,#3FD2D9);box-shadow:0 0 12px var(--accent,#3FD2D9);
+}
+#tweaks .tw-head .ttl{
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:0.14em;text-transform:uppercase;color:#eef1f5;
+}
+#tweaks .tw-head .chev{
+  margin-left:auto;color:#8C9298;font-size:13px;transition:transform .2s;
+}
+#tweaks.collapsed .tw-head .chev{transform:rotate(-90deg);}
+#tweaks.collapsed .tw-body{display:none;}
+#tweaks .tw-body{padding:18px;display:flex;flex-direction:column;gap:22px;}
+
+#tweaks .tw-section > .tw-label{
+  font-family:'Chakra Petch',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:0.28em;text-transform:uppercase;color:var(--accent,#3FD2D9);
+  display:block;margin-bottom:12px;
+}
+#tweaks .tw-field{margin-bottom:16px;}
+#tweaks .tw-field:last-child{margin-bottom:0;}
+#tweaks .tw-field .row{
+  display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;
+}
+#tweaks .tw-field .name{
+  font-size:12px;letter-spacing:0.08em;color:#aeb4bb;text-transform:uppercase;
+}
+#tweaks .tw-field .val{
+  font-family:'Chakra Petch',sans-serif;font-size:12px;color:#eef1f5;
+}
+
+/* nuanciers accent */
+#tweaks .swatches{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+#tweaks .swatch{
+  width:30px;height:30px;border-radius:8px;cursor:pointer;
+  border:2px solid transparent;transition:transform .12s,border-color .12s;
+}
+#tweaks .swatch:hover{transform:scale(1.08);}
+#tweaks .swatch.active{border-color:#eef1f5;}
+#tweaks .swatch.custom{
+  display:flex;align-items:center;justify-content:center;
+  background:repeating-conic-gradient(#3FD2D9 0% 25%,#7A66BE 0% 50%);
+  position:relative;overflow:hidden;
+}
+#tweaks .swatch.custom input[type=color]{
+  position:absolute;inset:-4px;width:calc(100% + 8px);height:calc(100% + 8px);
+  border:none;padding:0;background:none;cursor:pointer;opacity:0;
+}
+
+/* sliders */
+#tweaks input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:4px;
+  background:linear-gradient(90deg,var(--accent,#3FD2D9) var(--fill,30%),rgba(140,146,152,0.25) var(--fill,30%));
+  outline:none;cursor:pointer;
+}
+#tweaks input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;
+  background:#eef1f5;border:2px solid var(--accent,#3FD2D9);
+  box-shadow:0 0 10px color-mix(in srgb,var(--accent,#3FD2D9) 60%,transparent);
+}
+#tweaks input[type=range]::-moz-range-thumb{
+  width:16px;height:16px;border-radius:50%;
+  background:#eef1f5;border:2px solid var(--accent,#3FD2D9);
+}
+
+/* toggle */
+#tweaks .toggle{
+  position:relative;width:46px;height:24px;border-radius:999px;cursor:pointer;
+  background:rgba(140,146,152,0.3);transition:background .15s;
+}
+#tweaks .toggle.on{background:var(--accent,#3FD2D9);}
+#tweaks .toggle .knob{
+  position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;
+  background:#eef1f5;transition:transform .15s;
+}
+#tweaks .toggle.on .knob{transform:translateX(22px);}
+
+#tweaks .tw-foot{
+  font-family:'Chakra Petch',sans-serif;font-size:10px;letter-spacing:0.1em;
+  color:#5a616a;line-height:1.5;border-top:1px solid rgba(140,146,152,0.12);
+  padding-top:14px;
+}
+
+@media (max-width:1100px){
+  #tweaks{position:static;width:auto;margin:0 auto 28px;max-width:760px;}
+}

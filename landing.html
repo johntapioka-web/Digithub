@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dark Fen'X — Cyber-Shogun Audio</title>
+<link rel="icon" type="image/webp" href="./dfx-logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07080C; --surface:#0E1016; --text:#eef1f5; --muted:#8C9298;
+    --stroke:#20252c; --accent:#3FD2D9; --violet:#7A66BE;
+    --grad:linear-gradient(90deg,#3FD2D9 0%,#7A66BE 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Montserrat',sans-serif;overflow-x:hidden;}
+  a{color:inherit;text-decoration:none;}
+  .display{font-family:'Orbitron',sans-serif;text-transform:uppercase;}
+  .label{font-family:'Chakra Petch',sans-serif;text-transform:uppercase;letter-spacing:0.3em;font-size:12px;color:var(--muted);}
+  .accent-text{color:var(--accent);}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  ::selection{background:var(--accent);color:#04181a;}
+
+  /* ---------- keyframes ---------- */
+  @keyframes scrollDown{0%{transform:translateY(-100%);}100%{transform:translateY(220%);}}
+  @keyframes roleFade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes gradShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @keyframes twinkle{0%,100%{opacity:.25;}50%{opacity:.9;}}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.7);}}
+
+  /* ---------- loading ---------- */
+  #loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity .6s ease,visibility .6s;}
+  #loader.done{opacity:0;visibility:hidden;}
+  #loader .tl{position:absolute;top:34px;left:34px;}
+  #loader .words{font-family:'Orbitron';font-weight:700;font-size:clamp(34px,7vw,84px);color:rgba(238,241,245,.85);min-height:1.1em;}
+  #loader .count{position:absolute;bottom:30px;right:34px;font-family:'Orbitron';font-weight:800;font-size:clamp(60px,14vw,150px);font-variant-numeric:tabular-nums;color:var(--text);line-height:.9;}
+  #loader .bar{position:absolute;left:0;bottom:0;width:100%;height:3px;background:rgba(140,146,152,.25);}
+  #loader .bar > i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:var(--grad);box-shadow:0 0 10px rgba(63,210,217,.45);}
+
+  /* ---------- background galaxy ---------- */
+  #bg-fx{position:fixed;inset:0;z-index:-2;background:radial-gradient(120% 90% at 50% 18%,rgba(28,24,64,.55),rgba(7,8,12,0) 60%),linear-gradient(180deg,#0A0A0C,#07080C);}
+  #stars{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;}
+  #stars span{position:absolute;border-radius:50%;background:var(--accent);animation:twinkle 5s ease-in-out infinite;}
+
+  /* ---------- navbar ---------- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:18px 16px;}
+  nav .pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(14,16,22,.6);backdrop-filter:blur(12px);padding:8px;transition:box-shadow .3s,background .3s;}
+  nav .pill.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.45);background:rgba(14,16,22,.85);}
+  nav .logo{width:38px;height:38px;border-radius:50%;padding:2px;background:var(--grad);background-size:200% 200%;display:flex;transition:transform .25s;}
+  nav .logo:hover{transform:scale(1.1);animation:gradShift 3s ease infinite;}
+  nav .logo img{width:100%;height:100%;border-radius:50%;background:var(--bg);object-fit:contain;padding:3px;}
+  nav .sep{width:1px;height:20px;background:var(--stroke);margin:0 4px;}
+  nav a.link{font-size:13px;border-radius:999px;padding:8px 16px;color:var(--muted);transition:.2s;}
+  nav a.link:hover,nav a.link.active{color:var(--text);background:rgba(32,37,44,.6);}
+  nav .cta{position:relative;font-size:13px;border-radius:999px;padding:8px 16px;font-weight:600;color:var(--text);}
+  nav .cta span{position:relative;z-index:1;display:inline-flex;gap:5px;align-items:center;}
+  nav .cta::before{content:"";position:absolute;inset:-1.5px;border-radius:999px;background:var(--grad);opacity:0;transition:opacity .25s;}
+  nav .cta::after{content:"";position:absolute;inset:0;border-radius:999px;background:var(--surface);}
+  nav .cta span{position:relative;z-index:2;}
+  nav .cta:hover::before{opacity:1;}
+  @media(max-width:640px){nav .sep{display:none;}nav a.link{padding:7px 10px;}}
+
+  /* ---------- hero ---------- */
+  header.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 22px 80px;}
+  .hero .emblem{width:clamp(230px,32vw,360px);height:clamp(230px,32vw,360px);margin-bottom:34px;position:relative;border-radius:50%;}
+  .hero .emblem .halo{position:absolute;inset:-24%;border-radius:50%;background:radial-gradient(circle,rgba(122,102,190,.55),transparent 60%);filter:blur(28px);z-index:-1;}
+  .hero .emblem img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;border-radius:50%;border:2px solid color-mix(in srgb,var(--accent) 60%,transparent);box-shadow:0 0 50px rgba(63,210,217,.35),0 20px 60px rgba(0,0,0,.6);}
+  .hero .eyebrow{margin-bottom:26px;}
+  .hero h1{font-family:'Orbitron';font-weight:900;font-size:clamp(52px,12vw,150px);line-height:.92;letter-spacing:.01em;text-transform:uppercase;margin-bottom:22px;}
+  .hero .role{font-size:clamp(16px,2.6vw,26px);color:var(--muted);margin-bottom:30px;}
+  .hero .role b{font-family:'Orbitron';font-weight:700;color:var(--text);display:inline-block;}
+  .hero .desc{max-width:520px;font-size:15px;line-height:1.7;color:var(--muted);margin:0 auto 42px;}
+  .hero .ctas{display:inline-flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+  .btn{position:relative;border-radius:999px;font-size:14px;font-weight:600;padding:15px 30px;cursor:pointer;border:none;transition:transform .2s;display:inline-flex;align-items:center;gap:8px;}
+  .btn:hover{transform:scale(1.05);}
+  .btn-solid{background:var(--accent);color:#04181a;font-family:'Orbitron';font-weight:800;text-transform:uppercase;letter-spacing:.04em;}
+  .btn-solid:hover{box-shadow:0 0 36px rgba(63,210,217,.45);}
+  .btn-out{position:relative;background:var(--bg);color:var(--text);border:2px solid var(--stroke);font-family:'Orbitron';font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+  .btn-out:hover{border-color:var(--accent);box-shadow:0 0 26px rgba(63,210,217,.25);}
+  .scroll-ind{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;}
+  .scroll-ind .line{width:1px;height:42px;background:var(--stroke);overflow:hidden;position:relative;}
+  .scroll-ind .line i{position:absolute;left:0;top:0;width:100%;height:40%;background:var(--accent);animation:scrollDown 1.6s ease-in-out infinite;}
+
+  /* ---------- sections ---------- */
+  section{position:relative;z-index:1;}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+  .sec-pad{padding:90px 0;}
+  .sec-head{margin-bottom:46px;}
+  .sec-head .eb{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .sec-head .eb .dash{width:34px;height:1px;background:var(--stroke);}
+  .sec-head h2{font-family:'Orbitron';font-weight:800;font-size:clamp(30px,5vw,52px);text-transform:uppercase;line-height:1.05;}
+  .sec-head h2 i{font-style:normal;}
+  .sec-head p{margin-top:14px;color:var(--muted);max-width:460px;font-size:15px;line-height:1.6;}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.25,.1,.25,1),transform .9s cubic-bezier(.25,.1,.25,1);}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- bento mixes ---------- */
+  .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:22px;}
+  .card{position:relative;grid-column:span 12;border:1px solid var(--stroke);border-radius:26px;overflow:hidden;background:var(--surface);min-height:300px;cursor:pointer;}
+  @media(min-width:860px){
+    .card.c7{grid-column:span 7;} .card.c5{grid-column:span 5;}
+  }
+  .card .art{position:absolute;inset:0;}
+  .card .art .glow{position:absolute;inset:0;}
+  .card .art .emb{position:absolute;right:-4%;bottom:0;height:112%;width:auto;opacity:.92;object-fit:cover;object-position:center top;filter:drop-shadow(0 10px 30px rgba(0,0,0,.55));transition:transform .5s ease;-webkit-mask-image:linear-gradient(90deg,transparent,#000 38%);mask-image:linear-gradient(90deg,transparent,#000 38%);}
+  .card:hover .art .emb{transform:scale(1.07) rotate(-3deg);}
+  .card .meta{position:absolute;left:26px;bottom:24px;z-index:2;}
+  .card .meta .t{font-family:'Orbitron';font-weight:800;font-size:26px;text-transform:uppercase;}
+  .card .meta .s{font-family:'Chakra Petch';font-size:13px;letter-spacing:.2em;color:var(--accent);margin-top:6px;}
+  .card .tag{position:absolute;top:22px;left:22px;z-index:2;}
+  .card .hov{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;background:rgba(7,8,12,.55);backdrop-filter:blur(8px);opacity:0;transition:opacity .35s;}
+  .card:hover .hov{opacity:1;}
+  .card .hov .play{position:relative;border-radius:999px;padding:14px 26px;background:var(--bg);font-family:'Orbitron';font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:14px;display:inline-flex;gap:10px;align-items:center;}
+  .card .hov .play::before{content:"";position:absolute;inset:-2px;border-radius:999px;background:var(--grad);background-size:200% 200%;animation:gradShift 4s ease infinite;z-index:-1;}
+
+  /* ---------- tour ---------- */
+  .tour{display:flex;flex-direction:column;gap:14px;}
+  .gig{display:flex;align-items:center;gap:22px;padding:18px 22px;border:1px solid var(--stroke);border-radius:999px;background:rgba(14,16,22,.3);transition:.25s;flex-wrap:wrap;}
+  .gig:hover{background:var(--surface);border-color:rgba(63,210,217,.4);transform:translateX(4px);}
+  .gig .date{font-family:'Orbitron';font-weight:800;font-size:18px;min-width:130px;}
+  .gig .venue{flex:1;min-width:160px;}
+  .gig .venue .v{font-weight:600;}
+  .gig .venue .c{font-size:13px;color:var(--muted);}
+  .gig .city{font-family:'Chakra Petch';letter-spacing:.2em;color:var(--accent);font-size:13px;}
+  .gig .tk{font-family:'Orbitron';font-weight:700;font-size:13px;text-transform:uppercase;border:1px solid var(--stroke);border-radius:999px;padding:9px 18px;transition:.2s;}
+  .gig .tk:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* ---------- visuals gallery ---------- */
+  .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media(max-width:760px){.gal{grid-template-columns:repeat(2,1fr);}}
+  .gal a{position:relative;border:1px solid var(--stroke);border-radius:18px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--surface);will-change:transform;}
+  .gal a .gg{position:absolute;inset:0;}
+  .gal a img{width:62%;position:relative;z-index:1;filter:drop-shadow(0 8px 22px rgba(0,0,0,.5));transition:transform .4s;}
+  .gal a:hover img{transform:scale(1.08);}
+  .gal a .cap{position:absolute;bottom:12px;left:14px;z-index:2;font-family:'Chakra Petch';letter-spacing:.18em;font-size:11px;color:var(--muted);text-transform:uppercase;}
+
+  /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:center;}
+  @media(max-width:680px){.stats{grid-template-columns:1fr;}}
+  .stat .n{font-family:'Orbitron';font-weight:900;font-size:clamp(40px,7vw,76px);}
+  .stat .l{font-family:'Chakra Petch';letter-spacing:.22em;font-size:12px;color:var(--muted);text-transform:uppercase;margin-top:8px;}
+
+  /* ---------- contact / footer ---------- */
+  footer{position:relative;overflow:hidden;padding:90px 0 40px;z-index:1;}
+  footer .marquee{position:relative;overflow:hidden;white-space:nowrap;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);margin-bottom:60px;}
+  footer .marquee .track{display:inline-flex;animation:marquee 38s linear infinite;}
+  footer .marquee .track span{font-family:'Orbitron';font-weight:900;font-size:clamp(40px,9vw,110px);text-transform:uppercase;color:transparent;-webkit-text-stroke:1px rgba(140,146,152,.35);padding:0 28px;}
+  footer .cwrap{text-align:center;}
+  footer .cwrap h3{font-family:'Orbitron';font-weight:800;font-size:clamp(28px,5vw,52px);text-transform:uppercase;margin-bottom:26px;}
+  footer .email{position:relative;display:inline-flex;border-radius:999px;padding:16px 34px;font-family:'Orbitron';font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:var(--accent);color:#04181a;transition:transform .2s,box-shadow .2s;}
+  footer .email:hover{transform:scale(1.05);box-shadow:0 0 36px rgba(63,210,217,.45);}
+  footer .bar{margin-top:64px;border-top:1px solid var(--stroke);padding-top:26px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;}
+  footer .socials{display:flex;gap:22px;}
+  footer .socials a{font-family:'Chakra Petch';letter-spacing:.14em;font-size:12px;text-transform:uppercase;color:var(--muted);transition:.2s;}
+  footer .socials a:hover{color:var(--accent);}
+  footer .avail{display:flex;align-items:center;gap:10px;font-family:'Chakra Petch';letter-spacing:.14em;font-size:12px;text-transform:uppercase;color:var(--muted);}
+  footer .avail .dot{width:9px;height:9px;border-radius:50%;background:#46d39a;box-shadow:0 0 10px #46d39a;animation:pulse 1.8s ease-in-out infinite;}
+</style>
+</head>
+<body>
+
+<!-- ===== LOADING ===== -->
+<div id="loader">
+  <div class="tl label">Dark Fen'X</div>
+  <div class="words display" id="ldWords">Mix</div>
+  <div class="count" id="ldCount">000</div>
+  <div class="bar"><i id="ldBar"></i></div>
+</div>
+
+<!-- ===== BACKGROUND ===== -->
+<div id="bg-fx"></div>
+<div id="stars"></div>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="pill" id="navPill">
+    <a href="#top" class="logo"><img src="./dfx-logo.webp" alt="DFX"></a>
+    <span class="sep"></span>
+    <a href="#top" class="link active">Home</a>
+    <a href="#mixes" class="link">Mixes</a>
+    <a href="#tour" class="link">Tour</a>
+    <span class="sep"></span>
+    <a href="#contact" class="cta"><span>Listen ↗</span></a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="emblem"><div class="halo"></div><img src="./avatar-masked-cyan.webp" alt="Dark Fen'X — Cyber-Shogun"></div>
+  <div class="eyebrow label">New mixes every month</div>
+  <h1 class="display">Dark Fen'X</h1>
+  <div class="role">A <b id="role">Cyber-Shogun</b> selector from the void.</div>
+  <p class="desc">Dark, premium electronic sets — gunmetal, carbone et acier brossé, éclairés par une lueur cyan glace et un cœur galaxie.</p>
+  <div class="ctas">
+    <a href="#mixes" class="btn btn-solid">▶ Listen Now</a>
+    <a href="#contact" class="btn btn-out">Book a set</a>
+  </div>
+  <div class="scroll-ind"><span class="label" style="font-size:11px;letter-spacing:.2em;">Scroll</span><div class="line"><i></i></div></div>
+</header>
+
+<!-- ===== MIXES ===== -->
+<section class="sec-pad" id="mixes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eb"><span class="dash"></span><span class="label">Latest mixes</span></div>
+      <h2 class="display">Featured <i class="grad-text">drops</i></h2>
+      <p>Une sélection de sets, du rituel nocturne à l'after — Cyber-Shogun audio.</p>
+    </div>
+    <div class="bento">
+      <div class="card c7 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 20% 30%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">01 · 62 min</div><div class="meta"><div class="t display">Nocturne</div><div class="s">A cyber-shogun ritual</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Nocturne</i></span></div></div>
+      <div class="card c5 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 80% 20%,rgba(63,210,217,.28),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">02 · 48 min</div><div class="meta"><div class="t display">After Dark</div><div class="s">Warehouse session</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">After Dark</i></span></div></div>
+      <div class="card c5 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 30% 70%,rgba(122,102,190,.35),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-masked-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">03 · 71 min</div><div class="meta"><div class="t display">Obsidian</div><div class="s">Deep / hypnotic</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Obsidian</i></span></div></div>
+      <div class="card c7 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 70% 60%,rgba(63,210,217,.26),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-masked-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">04 · 55 min</div><div class="meta"><div class="t display">Galaxy Drift</div><div class="s">Melodic / cosmic</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Galaxy Drift</i></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOUR ===== -->
+<section class="sec-pad" id="tour">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eb"><span class="dash"></span><span class="label">Tour</span></div>
+      <h2 class="display">Upcoming <i class="grad-text">sets</i></h2>
+      <p>Là où le phénix joue ce trimestre.</p>
+    </div>
+    <div class="tour">
+      <div class="gig reveal"><div class="date display">SAT 12 JUL</div><div class="venue"><div class="v">Warehouse 9</div><div class="c">23:00 — Late</div></div><div class="city">Berlin · DE</div><a class="tk" href="#contact">Tickets</a></div>
+      <div class="gig reveal"><div class="date display">FRI 25 JUL</div><div class="venue"><div class="v">Cosmic Hall</div><div class="c">22:00 — Late</div></div><div class="city">Paris · FR</div><a class="tk" href="#contact">Tickets</a></div>
+      <div class="gig reveal"><div class="date display">SAT 09 AUG</div><div class="venue"><div class="v">Obsidian Club</div><div class="c">00:00 — Late</div></div><div class="city">London · UK</div><a class="tk" href="#contact">Tickets</a></div>
+      <div class="gig reveal"><div class="date display">SAT 30 AUG</div><div class="venue"><div class="v">Galaxy Dome</div><div class="c">21:30 — Late</div></div><div class="city">Amsterdam · NL</div><a class="tk" href="#contact">Tickets</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VISUALS ===== -->
+<section class="sec-pad" id="visuals">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eb"><span class="dash"></span><span class="label">Brand visuals</span></div>
+      <h2 class="display">Visual <i class="grad-text">playground</i></h2>
+      <p>Le kit de marque complet (bannières, headers, stories, avatars) — exportable en PNG.</p>
+    </div>
+    <div class="gal">
+      <a href="index.html#2a"><div class="gg" style="background:radial-gradient(80% 100% at 30% 30%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">YouTube · 2560×1440</span></a>
+      <a href="index.html#2c"><div class="gg" style="background:radial-gradient(80% 100% at 70% 30%,rgba(63,210,217,.3),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Spotify · 2660×1140</span></a>
+      <a href="index.html#2f"><div class="gg" style="background:radial-gradient(80% 100% at 50% 70%,rgba(122,102,190,.35),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Story · 1080×1920</span></a>
+      <a href="index.html#2d"><div class="gg" style="background:radial-gradient(80% 100% at 30% 60%,rgba(63,210,217,.26),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">SoundCloud · 2480×520</span></a>
+      <a href="index.html#av-round"><div class="gg" style="background:radial-gradient(80% 100% at 60% 40%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Avatar · 1080²</span></a>
+      <a href="index.html#2e"><div class="gg" style="background:radial-gradient(80% 100% at 40% 50%,rgba(63,210,217,.28),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Facebook · 1640×624</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="sec-pad">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><div class="n grad-text">8+</div><div class="l">Years mixing</div></div>
+      <div class="stat reveal"><div class="n grad-text">120+</div><div class="l">Sets played</div></div>
+      <div class="stat reveal"><div class="n grad-text">50K</div><div class="l">Listeners</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT / FOOTER ===== -->
+<footer id="contact">
+  <div class="marquee"><div class="track" id="mq"></div></div>
+  <div class="wrap cwrap">
+    <h3 class="display">Let's build the <span class="grad-text">night</span></h3>
+    <a class="email" href="mailto:booking@darkfenx.com">booking@darkfenx.com</a>
+    <div class="bar">
+      <div class="socials">
+        <a href="#">Apple Music</a><a href="#">Spotify</a><a href="#">YouTube</a><a href="#">SoundCloud</a><a href="#">Mixcloud</a>
+      </div>
+      <div class="avail"><span class="dot"></span>Available for bookings</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---- Loading screen ---- */
+  const words = ['Mix','Cyber','Shogun'];
+  const elWords = document.getElementById('ldWords');
+  const elCount = document.getElementById('ldCount');
+  const elBar = document.getElementById('ldBar');
+  const loader = document.getElementById('loader');
+  let wi = 0;
+  const wordTimer = setInterval(() => { wi = (wi + 1) % words.length; elWords.textContent = words[wi]; }, 900);
+  const DURATION = 2700; let t0 = null;
+  function tick(ts){
+    if (t0 === null) t0 = ts;
+    const p = Math.min(1, (ts - t0) / DURATION);
+    const c = Math.round(p * 100);
+    elCount.textContent = String(c).padStart(3, '0');
+    elBar.style.transform = 'scaleX(' + p + ')';
+    if (p < 1) requestAnimationFrame(tick);
+    else { clearInterval(wordTimer); setTimeout(() => { loader.classList.add('done'); document.body.style.overflow=''; }, 400); }
+  }
+  document.body.style.overflow = 'hidden';
+  requestAnimationFrame(tick);
+
+  /* ---- Starfield ---- */
+  const sf = document.getElementById('stars');
+  const N = Math.min(90, Math.round(window.innerWidth / 16));
+  let s = 20240629; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  let html = '';
+  for (let i = 0; i < N; i++){
+    const sz = 1 + rnd() * 2.6;
+    const cyan = rnd() > 0.55;
+    html += '<span style="left:' + (rnd()*100) + '%;top:' + (rnd()*100) + '%;width:' + sz + 'px;height:' + sz + 'px;'
+      + 'background:' + (cyan ? 'var(--accent)' : 'rgba(231,236,255,.9)') + ';'
+      + 'box-shadow:0 0 ' + (4+sz*2) + 'px var(--accent);'
+      + 'animation-delay:' + (-rnd()*5) + 's;animation-duration:' + (3.5+rnd()*4) + 's;"></span>';
+  }
+  sf.innerHTML = html;
+
+  /* ---- Navbar scroll shadow + active link ---- */
+  const pill = document.getElementById('navPill');
+  const links = [...document.querySelectorAll('nav a.link')];
+  const sections = ['top','mixes','tour'].map(id => document.getElementById(id));
+  function onScroll(){
+    pill.classList.toggle('scrolled', window.scrollY > 100);
+    let cur = 'top';
+    for (const sec of sections){ if (sec && sec.getBoundingClientRect().top <= 160) cur = sec.id; }
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+    // parallax sur la galerie
+    document.querySelectorAll('.gal a').forEach((a, i) => {
+      const r = a.getBoundingClientRect();
+      const off = (r.top + r.height/2 - window.innerHeight/2) / window.innerHeight;
+      a.style.transform = 'translateY(' + (off * (i % 2 ? -22 : 22)) + 'px)';
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---- Role cycle (hero) ---- */
+  const roles = ['Cyber-Shogun','Producer','Selector','DJ'];
+  const elRole = document.getElementById('role');
+  let ri = 0;
+  setInterval(() => {
+    ri = (ri + 1) % roles.length;
+    elRole.textContent = roles[ri];
+    elRole.style.animation = 'none'; void elRole.offsetWidth; elRole.style.animation = 'roleFade .5s ease-out';
+  }, 2000);
+
+  /* ---- Reveal on scroll ---- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15, rootMargin: '-40px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---- Marquee ---- */
+  const mq = document.getElementById('mq');
+  const unit = 'New mixes every month • ';
+  mq.innerHTML = '<span>' + unit.repeat(6) + '</span><span>' + unit.repeat(6) + '</span>';
+})();
+</script>
+</body>
+</html>
