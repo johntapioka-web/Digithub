@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dark Fen'X — Cyber-Shogun Audio</title>
+<meta name="description" content="Dark Fen'X — DJ cyber-shogun. Deux visages, un seul phénix : sets cosmiques et prestations terrestres. Podcasts, lives, booking.">
+<meta property="og:title" content="Dark Fen'X — Cyber · Shogun · Audio">
+<meta property="og:description" content="Deux visages, un seul phénix. Podcasts · Lives · Booking.">
+<meta property="og:image" content="https://darkfenx.netlify.app/masque.png">
+<meta property="og:url" content="https://darkfenx.netlify.app/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/webp" href="./embleme.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +26,7 @@
   a{color:inherit;text-decoration:none;}
   .display{font-family:'Orbitron',sans-serif;text-transform:uppercase;}
   .label{font-family:'Chakra Petch',sans-serif;text-transform:uppercase;letter-spacing:0.3em;font-size:12px;color:var(--muted);}
-  .accent-text{color:var(--accent);}
+  .accent-text{color:var(--accent-text,#5D8BE0);}
   .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
   ::selection{background:var(--accent);color:#060D24;}
 
@@ -81,7 +87,7 @@
   .btn-solid{background:var(--accent);color:#060D24;font-family:'Orbitron';font-weight:800;text-transform:uppercase;letter-spacing:.04em;}
   .btn-solid:hover{box-shadow:0 0 36px rgba(36,64,214,.45);}
   .btn-out{position:relative;background:var(--bg);color:var(--text);border:2px solid var(--stroke);font-family:'Orbitron';font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
-  .btn-out:hover{border-color:var(--accent);box-shadow:0 0 26px rgba(36,64,214,.25);}
+  .btn-out:hover{border-color:var(--accent-text,#5D8BE0);box-shadow:0 0 26px rgba(36,64,214,.25);}
   .scroll-ind{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;}
   .scroll-ind .line{width:1px;height:42px;background:var(--stroke);overflow:hidden;position:relative;}
   .scroll-ind .line i{position:absolute;left:0;top:0;width:100%;height:40%;background:var(--accent);animation:scrollDown 1.6s ease-in-out infinite;}
@@ -111,7 +117,7 @@
   .card:hover .art .emb{transform:scale(1.07) rotate(-3deg);}
   .card .meta{position:absolute;left:26px;bottom:24px;z-index:2;}
   .card .meta .t{font-family:'Orbitron';font-weight:800;font-size:26px;text-transform:uppercase;}
-  .card .meta .s{font-family:'Chakra Petch';font-size:13px;letter-spacing:.2em;color:var(--accent);margin-top:6px;}
+  .card .meta .s{font-family:'Chakra Petch';font-size:13px;letter-spacing:.2em;color:var(--accent-text,#5D8BE0);margin-top:6px;}
   .card .tag{position:absolute;top:22px;left:22px;z-index:2;}
   .card .hov{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;background:rgba(7,8,12,.55);backdrop-filter:blur(8px);opacity:0;transition:opacity .35s;}
   .card:hover .hov{opacity:1;}
@@ -126,9 +132,9 @@
   .gig .venue{flex:1;min-width:160px;}
   .gig .venue .v{font-weight:600;}
   .gig .venue .c{font-size:13px;color:var(--muted);}
-  .gig .city{font-family:'Chakra Petch';letter-spacing:.2em;color:var(--accent);font-size:13px;}
+  .gig .city{font-family:'Chakra Petch';letter-spacing:.2em;color:var(--accent-text,#5D8BE0);font-size:13px;}
   .gig .tk{font-family:'Orbitron';font-weight:700;font-size:13px;text-transform:uppercase;border:1px solid var(--stroke);border-radius:999px;padding:9px 18px;transition:.2s;}
-  .gig .tk:hover{border-color:var(--accent);color:var(--accent);}
+  .gig .tk:hover{border-color:var(--accent-text,#5D8BE0);color:var(--accent-text,#5D8BE0);}
 
   /* ---------- visuals gallery ---------- */
   .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
@@ -157,7 +163,7 @@
   footer .bar{margin-top:64px;border-top:1px solid var(--stroke);padding-top:26px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;}
   footer .socials{display:flex;gap:22px;}
   footer .socials a{font-family:'Chakra Petch';letter-spacing:.14em;font-size:12px;text-transform:uppercase;color:var(--muted);transition:.2s;}
-  footer .socials a:hover{color:var(--accent);}
+  footer .socials a:hover{color:var(--accent-text,#5D8BE0);}
   footer .avail{display:flex;align-items:center;gap:10px;font-family:'Chakra Petch';letter-spacing:.14em;font-size:12px;text-transform:uppercase;color:var(--muted);}
   footer .avail .dot{width:9px;height:9px;border-radius:50%;background:#46d39a;box-shadow:0 0 10px #46d39a;animation:pulse 1.8s ease-in-out infinite;}
 </style>
@@ -195,7 +201,8 @@
   <div class="eyebrow label">New mixes every month</div>
   <h1 class="display">Dark Fen'X</h1>
   <div class="role">A <b id="role">Cyber-Shogun</b> selector from the void.</div>
-  <p class="desc">Dark, premium electronic sets — gunmetal, carbone et acier brossé, éclairés par une lueur bleu nuit glace et un cœur galaxie.</p>
+  <p class="desc">Dark, premium electronic sets — gunmetal, carbone et acier brossé, éclairés par une lueur bleu nuit et un cœur galaxie. Deux visages, un seul phénix : <b>Dark Fen'X</b> le cosmique, <b>DFX</b> le terrestre.</p>
+  <p class="desc" style="letter-spacing:.18em;text-transform:uppercase;font-size:.82em;color:var(--accent-text,#5D8BE0)">Cyber · Shogun · Audio&nbsp;&nbsp;—&nbsp;&nbsp;Podcasts · Lives · Booking</p>
   <div class="ctas">
     <a href="#mixes" class="btn btn-solid">▶ Listen Now</a>
     <a href="#contact" class="btn btn-out">Book a set</a>
