@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dark Fen'X — Cyber-Shogun Audio</title>
-<link rel="icon" type="image/webp" href="./dfx-logo.webp">
+<link rel="icon" type="image/webp" href="./embleme.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&family=Chakra+Petch:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#07080C; --surface:#0E1016; --text:#eef1f5; --muted:#8C9298;
-    --stroke:#20252c; --accent:#3FD2D9; --violet:#7A66BE;
-    --grad:linear-gradient(90deg,#3FD2D9 0%,#7A66BE 100%);
+    --stroke:#20252c; --accent:#2440D6; --violet:#7A66BE;
+    --grad:linear-gradient(90deg,#2440D6 0%,#7A66BE 100%);
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -40,7 +40,7 @@
   #loader .words{font-family:'Orbitron';font-weight:700;font-size:clamp(34px,7vw,84px);color:rgba(238,241,245,.85);min-height:1.1em;}
   #loader .count{position:absolute;bottom:30px;right:34px;font-family:'Orbitron';font-weight:800;font-size:clamp(60px,14vw,150px);font-variant-numeric:tabular-nums;color:var(--text);line-height:.9;}
   #loader .bar{position:absolute;left:0;bottom:0;width:100%;height:3px;background:rgba(140,146,152,.25);}
-  #loader .bar > i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:var(--grad);box-shadow:0 0 10px rgba(63,210,217,.45);}
+  #loader .bar > i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:var(--grad);box-shadow:0 0 10px rgba(36,64,214,.45);}
 
   /* ---------- background galaxy ---------- */
   #bg-fx{position:fixed;inset:0;z-index:-2;background:radial-gradient(120% 90% at 50% 18%,rgba(28,24,64,.55),rgba(7,8,12,0) 60%),linear-gradient(180deg,#0A0A0C,#07080C);}
@@ -69,7 +69,7 @@
   header.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 22px 80px;}
   .hero .emblem{width:clamp(230px,32vw,360px);height:clamp(230px,32vw,360px);margin-bottom:34px;position:relative;border-radius:50%;}
   .hero .emblem .halo{position:absolute;inset:-24%;border-radius:50%;background:radial-gradient(circle,rgba(122,102,190,.55),transparent 60%);filter:blur(28px);z-index:-1;}
-  .hero .emblem img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;border-radius:50%;border:2px solid color-mix(in srgb,var(--accent) 60%,transparent);box-shadow:0 0 50px rgba(63,210,217,.35),0 20px 60px rgba(0,0,0,.6);}
+  .hero .emblem img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;border-radius:50%;border:2px solid color-mix(in srgb,var(--accent) 60%,transparent);box-shadow:0 0 50px rgba(36,64,214,.35),0 20px 60px rgba(0,0,0,.6);}
   .hero .eyebrow{margin-bottom:26px;}
   .hero h1{font-family:'Orbitron';font-weight:900;font-size:clamp(52px,12vw,150px);line-height:.92;letter-spacing:.01em;text-transform:uppercase;margin-bottom:22px;}
   .hero .role{font-size:clamp(16px,2.6vw,26px);color:var(--muted);margin-bottom:30px;}
@@ -79,9 +79,9 @@
   .btn{position:relative;border-radius:999px;font-size:14px;font-weight:600;padding:15px 30px;cursor:pointer;border:none;transition:transform .2s;display:inline-flex;align-items:center;gap:8px;}
   .btn:hover{transform:scale(1.05);}
   .btn-solid{background:var(--accent);color:#04181a;font-family:'Orbitron';font-weight:800;text-transform:uppercase;letter-spacing:.04em;}
-  .btn-solid:hover{box-shadow:0 0 36px rgba(63,210,217,.45);}
+  .btn-solid:hover{box-shadow:0 0 36px rgba(36,64,214,.45);}
   .btn-out{position:relative;background:var(--bg);color:var(--text);border:2px solid var(--stroke);font-family:'Orbitron';font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
-  .btn-out:hover{border-color:var(--accent);box-shadow:0 0 26px rgba(63,210,217,.25);}
+  .btn-out:hover{border-color:var(--accent);box-shadow:0 0 26px rgba(36,64,214,.25);}
   .scroll-ind{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;}
   .scroll-ind .line{width:1px;height:42px;background:var(--stroke);overflow:hidden;position:relative;}
   .scroll-ind .line i{position:absolute;left:0;top:0;width:100%;height:40%;background:var(--accent);animation:scrollDown 1.6s ease-in-out infinite;}
@@ -121,7 +121,7 @@
   /* ---------- tour ---------- */
   .tour{display:flex;flex-direction:column;gap:14px;}
   .gig{display:flex;align-items:center;gap:22px;padding:18px 22px;border:1px solid var(--stroke);border-radius:999px;background:rgba(14,16,22,.3);transition:.25s;flex-wrap:wrap;}
-  .gig:hover{background:var(--surface);border-color:rgba(63,210,217,.4);transform:translateX(4px);}
+  .gig:hover{background:var(--surface);border-color:rgba(36,64,214,.4);transform:translateX(4px);}
   .gig .date{font-family:'Orbitron';font-weight:800;font-size:18px;min-width:130px;}
   .gig .venue{flex:1;min-width:160px;}
   .gig .venue .v{font-weight:600;}
@@ -153,7 +153,7 @@
   footer .cwrap{text-align:center;}
   footer .cwrap h3{font-family:'Orbitron';font-weight:800;font-size:clamp(28px,5vw,52px);text-transform:uppercase;margin-bottom:26px;}
   footer .email{position:relative;display:inline-flex;border-radius:999px;padding:16px 34px;font-family:'Orbitron';font-weight:800;text-transform:uppercase;letter-spacing:.04em;background:var(--accent);color:#04181a;transition:transform .2s,box-shadow .2s;}
-  footer .email:hover{transform:scale(1.05);box-shadow:0 0 36px rgba(63,210,217,.45);}
+  footer .email:hover{transform:scale(1.05);box-shadow:0 0 36px rgba(36,64,214,.45);}
   footer .bar{margin-top:64px;border-top:1px solid var(--stroke);padding-top:26px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;}
   footer .socials{display:flex;gap:22px;}
   footer .socials a{font-family:'Chakra Petch';letter-spacing:.14em;font-size:12px;text-transform:uppercase;color:var(--muted);transition:.2s;}
@@ -179,7 +179,7 @@
 <!-- ===== NAV ===== -->
 <nav>
   <div class="pill" id="navPill">
-    <a href="#top" class="logo"><img src="./dfx-logo.webp" alt="DFX"></a>
+    <a href="#top" class="logo"><img src="./embleme.png" alt="DFX"></a>
     <span class="sep"></span>
     <a href="#top" class="link active">Home</a>
     <a href="#mixes" class="link">Mixes</a>
@@ -191,7 +191,7 @@
 
 <!-- ===== HERO ===== -->
 <header class="hero" id="top">
-  <div class="emblem"><div class="halo"></div><img src="./avatar-masked-cyan.webp" alt="Dark Fen'X — Cyber-Shogun"></div>
+  <div class="emblem"><div class="halo"></div><img src="./masque.png" alt="Dark Fen'X — Cyber-Shogun"></div>
   <div class="eyebrow label">New mixes every month</div>
   <h1 class="display">Dark Fen'X</h1>
   <div class="role">A <b id="role">Cyber-Shogun</b> selector from the void.</div>
@@ -212,10 +212,10 @@
       <p>Une sélection de sets, du rituel nocturne à l'after — Cyber-Shogun audio.</p>
     </div>
     <div class="bento">
-      <div class="card c7 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 20% 30%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">01 · 62 min</div><div class="meta"><div class="t display">Nocturne</div><div class="s">A cyber-shogun ritual</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Nocturne</i></span></div></div>
-      <div class="card c5 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 80% 20%,rgba(63,210,217,.28),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">02 · 48 min</div><div class="meta"><div class="t display">After Dark</div><div class="s">Warehouse session</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">After Dark</i></span></div></div>
-      <div class="card c5 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 30% 70%,rgba(122,102,190,.35),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-masked-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">03 · 71 min</div><div class="meta"><div class="t display">Obsidian</div><div class="s">Deep / hypnotic</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Obsidian</i></span></div></div>
-      <div class="card c7 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 70% 60%,rgba(63,210,217,.26),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./avatar-masked-cyan.webp" alt=""></div><div class="tag label" style="letter-spacing:.2em;">04 · 55 min</div><div class="meta"><div class="t display">Galaxy Drift</div><div class="s">Melodic / cosmic</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Galaxy Drift</i></span></div></div>
+      <div class="card c7 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 20% 30%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./dfx-terrestre.jpg" alt=""></div><div class="tag label" style="letter-spacing:.2em;">01 · 62 min</div><div class="meta"><div class="t display">Nocturne</div><div class="s">A cyber-shogun ritual</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Nocturne</i></span></div></div>
+      <div class="card c5 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 80% 20%,rgba(36,64,214,.28),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./dfx-terrestre.jpg" alt=""></div><div class="tag label" style="letter-spacing:.2em;">02 · 48 min</div><div class="meta"><div class="t display">After Dark</div><div class="s">Warehouse session</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">After Dark</i></span></div></div>
+      <div class="card c5 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 30% 70%,rgba(122,102,190,.35),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./masque.png" alt=""></div><div class="tag label" style="letter-spacing:.2em;">03 · 71 min</div><div class="meta"><div class="t display">Obsidian</div><div class="s">Deep / hypnotic</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Obsidian</i></span></div></div>
+      <div class="card c7 reveal"><div class="art"><div class="glow" style="background:radial-gradient(90% 120% at 70% 60%,rgba(36,64,214,.26),rgba(7,8,12,0) 60%)"></div><img class="emb" src="./masque.png" alt=""></div><div class="tag label" style="letter-spacing:.2em;">04 · 55 min</div><div class="meta"><div class="t display">Galaxy Drift</div><div class="s">Melodic / cosmic</div></div><div class="hov"><span class="play">▶ Play — <i style="font-family:Orbitron">Galaxy Drift</i></span></div></div>
     </div>
   </div>
 </section>
@@ -246,12 +246,12 @@
       <p>Le kit de marque complet (bannières, headers, stories, avatars) — exportable en PNG.</p>
     </div>
     <div class="gal">
-      <a href="index.html#2a"><div class="gg" style="background:radial-gradient(80% 100% at 30% 30%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">YouTube · 2560×1440</span></a>
-      <a href="index.html#2c"><div class="gg" style="background:radial-gradient(80% 100% at 70% 30%,rgba(63,210,217,.3),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Spotify · 2660×1140</span></a>
-      <a href="index.html#2f"><div class="gg" style="background:radial-gradient(80% 100% at 50% 70%,rgba(122,102,190,.35),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Story · 1080×1920</span></a>
-      <a href="index.html#2d"><div class="gg" style="background:radial-gradient(80% 100% at 30% 60%,rgba(63,210,217,.26),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">SoundCloud · 2480×520</span></a>
-      <a href="index.html#av-round"><div class="gg" style="background:radial-gradient(80% 100% at 60% 40%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Avatar · 1080²</span></a>
-      <a href="index.html#2e"><div class="gg" style="background:radial-gradient(80% 100% at 40% 50%,rgba(63,210,217,.28),rgba(7,8,12,0) 60%)"></div><img src="./dfx-logo.webp" alt=""><span class="cap">Facebook · 1640×624</span></a>
+      <a href="index.html#2a"><div class="gg" style="background:radial-gradient(80% 100% at 30% 30%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img src="./embleme.png" alt=""><span class="cap">YouTube · 2560×1440</span></a>
+      <a href="index.html#2c"><div class="gg" style="background:radial-gradient(80% 100% at 70% 30%,rgba(36,64,214,.3),rgba(7,8,12,0) 60%)"></div><img src="./embleme.png" alt=""><span class="cap">Spotify · 2660×1140</span></a>
+      <a href="index.html#2f"><div class="gg" style="background:radial-gradient(80% 100% at 50% 70%,rgba(122,102,190,.35),rgba(7,8,12,0) 60%)"></div><img src="./embleme.png" alt=""><span class="cap">Story · 1080×1920</span></a>
+      <a href="index.html#2d"><div class="gg" style="background:radial-gradient(80% 100% at 30% 60%,rgba(36,64,214,.26),rgba(7,8,12,0) 60%)"></div><img src="./embleme.png" alt=""><span class="cap">SoundCloud · 2480×520</span></a>
+      <a href="index.html#av-round"><div class="gg" style="background:radial-gradient(80% 100% at 60% 40%,rgba(122,102,190,.4),rgba(7,8,12,0) 60%)"></div><img src="./embleme.png" alt=""><span class="cap">Avatar · 1080²</span></a>
+      <a href="index.html#2e"><div class="gg" style="background:radial-gradient(80% 100% at 40% 50%,rgba(36,64,214,.28),rgba(7,8,12,0) 60%)"></div><img src="./embleme.png" alt=""><span class="cap">Facebook · 1640×624</span></a>
     </div>
   </div>
 </section>

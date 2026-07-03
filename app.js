@@ -22,7 +22,7 @@
 
   /* État global piloté par le panneau Tweaks */
   const state = {
-    accent: '#3FD2D9',
+    accent: '#2440D6',
     starDensity: 30, // %
     cyanGlow: 25,    // %
     showCircuit: true,
@@ -66,8 +66,8 @@
           'left:' + left + '%;' +
           'width:' + size + 'px;height:' + size + 'px;' +
           'border-radius:50%;' +
-          'background:' + (cyan ? 'var(--accent,#3FD2D9)' : 'rgba(231,236,255,0.95)') + ';' +
-          'box-shadow:0 0 ' + (5 + size * 2.2) + 'px ' + (1.5 + size) + 'px var(--accent,#3FD2D9);' +
+          'background:' + (cyan ? 'var(--accent,#2440D6)' : 'rgba(231,236,255,0.95)') + ';' +
+          'box-shadow:0 0 ' + (5 + size * 2.2) + 'px ' + (1.5 + size) + 'px var(--accent,#2440D6);' +
           'opacity:0;' +
           '--rise:' + rise + 'px;' +
           '--dx:' + dx + 'px;' +
@@ -112,8 +112,8 @@
           'width:' + w + 'px;height:' + h + 'px;' +
           'border-radius:' + w + 'px;' +
           'transform-origin:bottom;' +
-          'background:linear-gradient(180deg, var(--accent,#3FD2D9), color-mix(in srgb, var(--accent,#3FD2D9) 45%, #07080C));' +
-          'box-shadow:0 0 14px color-mix(in srgb, var(--accent,#3FD2D9) 60%, transparent);' +
+          'background:linear-gradient(180deg, var(--accent,#2440D6), color-mix(in srgb, var(--accent,#2440D6) 45%, #07080C));' +
+          'box-shadow:0 0 14px color-mix(in srgb, var(--accent,#2440D6) 60%, transparent);' +
           '--lo:' + lo + ';--hi:' + hi + ';';
         el.style.animation = anim;
         el.style.animationDelay = delay + 's';
