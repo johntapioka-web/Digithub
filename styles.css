@@ -110,7 +110,7 @@ image-slot .slot-clear{
 image-slot[data-filled]:hover .slot-clear{display:inline-flex;}
 
 /* ============================================================
-   Panneau Tweaks — « Glace & Galaxie »
+   Panneau Tweaks — « Dark Blu & Galaxie »
    ============================================================ */
 #tweaks{
   position:fixed;top:22px;right:22px;z-index:1000;width:300px;
