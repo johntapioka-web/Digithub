@@ -105,6 +105,15 @@
   .idcard .idmeta h3{font-size:clamp(30px,4vw,40px);line-height:1;margin:12px 0 12px;text-transform:uppercase;}
   .idcard .idmeta p{color:var(--muted);font-size:14px;line-height:1.65;}
 
+  /* ---------- teasers (clips vidéo 9:16) ---------- */
+  .clips{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:760px){.clips{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.clips{grid-template-columns:1fr;}}
+  .clipcard{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--stroke);background:#000;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:transform .3s,border-color .3s;}
+  .clipcard:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--accent) 55%,transparent);}
+  .clipcard video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;}
+  .clipcard .clab{position:absolute;left:14px;bottom:12px;z-index:2;font-family:'Chakra Petch';letter-spacing:.18em;font-size:11px;text-transform:uppercase;color:var(--text);text-shadow:0 2px 8px rgba(0,0,0,.7);}
+
   /* ---------- sections ---------- */
   section{position:relative;z-index:1;}
   .wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
@@ -202,6 +211,7 @@
     <span class="sep"></span>
     <a href="#top" class="link active">Home</a>
     <a href="#identites" class="link">Identité</a>
+    <a href="#teasers" class="link">Teasers</a>
     <a href="#mixes" class="link">Mixes</a>
     <a href="#tour" class="link">Tour</a>
     <span class="sep"></span>
@@ -247,6 +257,31 @@
           <h3 class="display accent-text">DFX</h3>
           <p>Sans masque, marquages cyan. Live, warehouse, booking — la face humaine et physique.</p>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEASERS (clips) ===== -->
+<section class="sec-pad" id="teasers">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eb"><span class="dash"></span><span class="label">Teasers</span></div>
+      <h2 class="display">En <i class="grad-text">mouvement</i></h2>
+      <p>Trois clips — le cosmique masqué, le terrestre démasqué, et la transformation.</p>
+    </div>
+    <div class="clips">
+      <div class="clipcard reveal">
+        <video src="./clips/dark-fenx-cosmique.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="clab">Dark Fen'X · cosmique</span>
+      </div>
+      <div class="clipcard reveal">
+        <video src="./clips/dfx-dual.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="clab">Deux visages</span>
+      </div>
+      <div class="clipcard reveal">
+        <video src="./clips/dfx-terrestre.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <span class="clab">DFX · terrestre</span>
       </div>
     </div>
   </div>
@@ -374,7 +409,7 @@
   /* ---- Navbar scroll shadow + active link ---- */
   const pill = document.getElementById('navPill');
   const links = [...document.querySelectorAll('nav a.link')];
-  const sections = ['top','identites','mixes','tour'].map(id => document.getElementById(id));
+  const sections = ['top','identites','teasers','mixes','tour'].map(id => document.getElementById(id));
   function onScroll(){
     pill.classList.toggle('scrolled', window.scrollY > 100);
     let cur = 'top';
