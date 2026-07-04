@@ -1,6 +1,1 @@
-# La landing (vitrine) devient la page d'accueil.
-# Le "!" force la règle même si un index.html existe à la racine.
-/            /landing.html   200!
-
-# Le kit de marque reste accessible :
-/kit         /index.html     200
+/    /landing.html   200!
