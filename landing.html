@@ -272,15 +272,15 @@
     </div>
     <div class="clips">
       <div class="clipcard reveal">
-        <video src="./clips/dark-fenx-cosmique.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <video src="./clips/dark-fenx-cosmique.mp4" poster="./clips/poster-cosmique.jpg" autoplay muted loop playsinline preload="metadata"></video>
         <span class="clab">Dark Fen'X · cosmique</span>
       </div>
       <div class="clipcard reveal">
-        <video src="./clips/dfx-dual.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <video src="./clips/dfx-dual.mp4" poster="./clips/poster-dual.jpg" autoplay muted loop playsinline preload="metadata"></video>
         <span class="clab">Deux visages</span>
       </div>
       <div class="clipcard reveal">
-        <video src="./clips/dfx-terrestre.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <video src="./clips/dfx-terrestre.mp4" poster="./clips/poster-terrestre.jpg" autoplay muted loop playsinline preload="metadata"></video>
         <span class="clab">DFX · terrestre</span>
       </div>
     </div>
@@ -445,6 +445,24 @@
   const mq = document.getElementById('mq');
   const unit = 'New mixes every month • ';
   mq.innerHTML = '<span>' + unit.repeat(6) + '</span><span>' + unit.repeat(6) + '</span>';
+
+  /* ---- Teasers : lecture quand visible + clic play/pause ---- */
+  const clipVids = [...document.querySelectorAll('.clipcard video')];
+  if (clipVids.length) {
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        const v = e.target;
+        if (e.isIntersecting) { v.play().catch(() => {}); }
+        else { v.pause(); }
+      });
+    }, { threshold: 0.35 });
+    clipVids.forEach((v) => {
+      v.muted = true;
+      vio.observe(v);
+      v.style.cursor = 'pointer';
+      v.addEventListener('click', () => { v.paused ? v.play().catch(() => {}) : v.pause(); });
+    });
+  }
 })();
 </script>
 </body>
