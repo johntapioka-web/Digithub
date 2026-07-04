@@ -1,6 +1,6 @@
 # La landing (vitrine) devient la page d'accueil.
-# Rewrite (200) : l'URL reste "/", mais on sert landing.html.
-/            /landing.html   200
+# Le "!" force la règle même si un index.html existe à la racine.
+/            /landing.html   200!
 
 # Le kit de marque reste accessible :
 /kit         /index.html     200
