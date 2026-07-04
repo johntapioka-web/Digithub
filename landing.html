@@ -51,9 +51,9 @@
   nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:center;padding:18px 16px;}
   nav .pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(14,16,22,.6);backdrop-filter:blur(12px);padding:8px;transition:box-shadow .3s,background .3s;}
   nav .pill.scrolled{box-shadow:0 10px 30px rgba(0,0,0,.45);background:rgba(14,16,22,.85);}
-  nav .logo{width:38px;height:38px;border-radius:50%;padding:2px;background:var(--grad);background-size:200% 200%;display:flex;transition:transform .25s;}
+  nav .logo{width:40px;height:40px;border-radius:50%;padding:2px;background:var(--grad);background-size:200% 200%;display:flex;transition:transform .25s;box-shadow:0 0 16px rgba(63,210,217,.45);}
   nav .logo:hover{transform:scale(1.1);animation:gradShift 3s ease infinite;}
-  nav .logo img{width:100%;height:100%;border-radius:50%;background:var(--bg);object-fit:contain;padding:3px;}
+  nav .logo img{width:100%;height:100%;border-radius:50%;background:#0b0e17;object-fit:cover;}
   nav .sep{width:1px;height:20px;background:var(--stroke);margin:0 4px;}
   nav a.link{font-size:13px;border-radius:999px;padding:8px 16px;color:var(--muted);transition:.2s;}
   nav a.link:hover,nav a.link.active{color:var(--text);background:rgba(32,37,44,.6);}
@@ -154,7 +154,7 @@
   @media(max-width:760px){.gal{grid-template-columns:repeat(2,1fr);}}
   .gal a{position:relative;border:1px solid var(--stroke);border-radius:18px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;background:var(--surface);will-change:transform;}
   .gal a .gg{position:absolute;inset:0;}
-  .gal a img{width:62%;position:relative;z-index:1;filter:drop-shadow(0 8px 22px rgba(0,0,0,.5));transition:transform .4s;}
+  .gal a img{width:70%;position:relative;z-index:1;filter:drop-shadow(0 0 20px rgba(63,210,217,.4)) drop-shadow(0 8px 22px rgba(0,0,0,.5));transition:transform .4s;}
   .gal a:hover img{transform:scale(1.08);}
   .gal a .cap{position:absolute;bottom:12px;left:14px;z-index:2;font-family:'Chakra Petch';letter-spacing:.18em;font-size:11px;color:var(--muted);text-transform:uppercase;}
 
